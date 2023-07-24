@@ -25,6 +25,7 @@ urlpatterns = [
     # path('teacher', views.teacher, name='teacher'),
     path('userDetails', views.userDetails, name='userDetails'),
     path('studentDetails', views.studentDetails, name='studentDetails'),
+    path('studentDetailTeacher/<str:roll>/', views.studentDetailTeacher, name='studentDetailTeacher'),
     path('profileUpdate', views.profileUpdate, name='profileUpdate'),
     path('profileUpdateRequest', views.profileUpdateRequest, name='profileUpdateRequest'),
     path('changeUsername', views.changeUsername, name='changeUsername'),

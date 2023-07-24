@@ -976,6 +976,21 @@ def studentDetails(request):
         return render(
             request,
             "studentDetails.html")
+
+def studentDetailTeacher(request, roll):
+    student = roll
+    if StudentLoginInfo.objects.filter(roll_number = roll).exists():
+        student = StudentLoginInfo.objects.get(roll_number = student)
+        return render(
+            request,
+            "studentDetails.html",
+            {"username": student.username,'roll':student.roll_number, 'department': student.department,'program': student.program,'gender': student.gender,
+            'dob': student.dob},
+        )
+    else:
+        return render(
+            request,
+            "studentDetailTeacher.html")
     
 def profileUpdate(request):
     unique = request.COOKIES.get("unique")

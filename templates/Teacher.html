@@ -64,7 +64,7 @@
           </tr>
           {% for item in all_students %}
           <tr>
-              <td class="fs-5">{{item.name}}</td>
+              <td class="fs-5"><a href="/studentDetailTeacher/{{item.std.roll_number}}">{{item.name}}</a></td>
               <td class="fs-5">{{item.email}}</td>
             </tr>
         {% endfor %}

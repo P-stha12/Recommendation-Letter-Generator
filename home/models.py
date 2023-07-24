@@ -156,7 +156,7 @@ class Files(models.Model):
     CV = models.ImageField(upload_to='cv/', blank=True)
     Photo = models.ImageField(upload_to='student_photo/', blank=True)
     student = models.ForeignKey(StudentData, on_delete= CASCADE)
-    def __str__(self):
+    def __str__s(self):
         return str(self.student) + " Files"
     class Meta:
         db_table = 'Files'
