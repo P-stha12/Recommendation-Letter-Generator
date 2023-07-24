@@ -1,0 +1,272 @@
+{% extends 'base2.html' %}
+
+{% block title %}Edit Letter{% endblock title %}
+{% block body %}
+<div class="container">
+   <center> <h2>Letter of Recommendation</h2> </center>
+
+    
+
+    <div id='whole_file'>
+        <form method="POST" , action="/final">
+            <div contenteditable="true" name="textbox" id="textbox">
+
+                {% if student.std.gender == 'Male' %}
+                
+                 <p>
+                    <br>I would like to {{quality.recommend}} recommend <b>{{student.name}}</b> for admission to the graduate program at your
+                    university.
+                    I have known {{firstname}} for about {{student.years_taught}} now as an undergraduate student
+                    in {{student.std.program}} Engineering.
+                    {%if student.is_pro == 'Yes'%}
+                        Moreover, I was the supervisor for his final year project.
+                    {%endif%}
+                    
+                     
+                    {% if value %}
+                    I taught him {{subject}}.
+                    {%else%}
+                    I taught him
+                    {%for item in subjects %} {{item}}, {%endfor%} and {{subject}}.
+
+                    {%endif%}
+
+                </p>
+
+
+
+                <p><br>I recall {{firstname}} as a {{quality.quality}} student.
+                    
+                    {% if academics.tentative_ranking == "Batch Topper" %}
+                    In fact, he was the topper of his batch in {{student.std.program}} Engineering.
+                    {% else %}
+                    He maintained excellent academic performance throughout his undergraduate
+                    ranking among the {{academics.tentative_ranking}} students of his batch.
+                    {% endif %}
+                    As an instructor and his supervisor
+                    too I had enough opportunity is observe his capabilities closely.</p>
+
+
+                <p><br>
+
+                    {%if student.is_pro == 'Yes'%}
+                    I was the supervisor in his project titled {{project.supervised_project}}.
+                    I was quite impressed by his hardworking nature and learning capability. 
+                    {%endif%}
+
+                    {%if project.final_project%}
+                    I supervised him in his project {{project.final_project}}. I could observe his keen interest
+                    and aptitude for research while working on the project.
+                    {%endif%}
+                    
+
+                    {%if student.is_paper == 'Yes'%}
+                    In fact, he was also able to publish a paper on {{paper.paper_title}}.
+                    {%endif%}
+
+                </p>
+                
+
+                <p><br>I have noted his {{quality.presentation}} presentation skills while he presented his work at our
+                    department as well as in the
+                    conference.
+                    {%if quality.leadership or quality.teamwork%}
+                    I have seen that he has good leadership capability and has a teamwork spirit.
+                    {%endif%}
+                    {%if quality.hardworking%}
+                    He is a very hardworking student who is always eager to learn.
+                    {%endif%}
+                    {%if quality.friendly%}
+                    He is a well-spoken person with a friendly and gentle personality.
+                    {%endif%}
+                    {%if quality.social%}
+                    He also has given his time to different social causes.
+                    {%endif%}
+                    He is very helpful and cooperative student. He eagerly handed over his
+                    project work to his juniors who wanted to further continue the research on the topic along
+                    with proper guidance and resources. I have also been impressed by his communication skills during
+                    project presentations and lectures.</p>
+
+
+                <p><br>I appreciate his technical and professional skills.
+                    {%if quality.extracirricular != 'No'%}
+                    Besides academics, he was also involved in several extra-curricular activities .
+                    He participated in various competitions organized in and off the campus.
+                    {%endif%}
+                    {%if project.deployed%}
+                    Unlike, most students who limit their project to an
+                    academic exercise, he actually deployed his project publicly in our server and maintained it.
+                    {%endif%}
+                    {%if student.intern%}
+                    He has worked in some IT companies which, I believe, has further added to his technical skills and
+                    professional experience.
+                    {%endif%}
+            
+                </p>
+
+                <p><br>I am quite confident that {{firstname}}'s skills coupled with academic capability will make him a
+                    good candidate for
+                    your university. Thus, I would highly recommend him for the graduate program at your esteemed
+                    university. Please feel free to contact me if further enquiry is required.</p>
+
+                <p><br>{{student.professor.name}},
+                    <br>{{student.professor.title}},
+                    <br>Department of {{student.professor.department}} Engineering
+                    <br>Pulchowk Campus, Institute of Engineering, Tribhuvan University
+                    <br>Phone: {{student.professor.phone}}
+                    <br>Mail: {{student.professor.email}}
+                </p> 
+
+                
+            {% else %}
+                <p>
+                    <br>I would like to recommend <b>{{student.name}}</b> for admission to the graduate program at your
+                    university.
+                    I have known {{firstname}} for about {{student.years_taught}} now as an undergraduate student
+                    in {{student.std.program}} Engineering.
+                    {%if student.is_pro == 'Yes'%}
+                        Moreover, I was the supervisor for her final year project.
+                    {%endif%}
+                    
+                     
+                    {% if value %}
+                    I taught her {{subject}}.
+                    {%else%}
+                    I taught her
+                    {%for item in subjects %} {{item}}, {%endfor%} and {{subject}}.
+
+                    {%endif%}
+
+                </p>
+
+
+
+                <p><br>I recall {{firstname}} as a {{quality.quality}} student.
+                    
+                    {% if academics.tentative_ranking == "Batch Topper" %}
+                    In fact, she was the topper of his batch in {{student.std.program}} Engineering.
+                    {% else %}
+                    She maintained excellent academic performance throughout her undergraduate
+                    ranking among the {{academics.tentative_ranking}} students of her batch.
+                    {% endif %}
+                    As an instructor and her supervisor
+                    too I had enough opportunity is observe her capabilities closely.</p>
+
+
+                <p><br>
+
+                    {%if student.is_pro == 'Yes'%}
+                    I was the supervisor in her project titled {{project.supervised_project}}.
+                    I was quite impressed by her hardworking nature and learning capability. 
+                    {%endif%}
+
+                    {%if project.final_project%}
+                    I supervised in her project {{project.final_project}}. I could observe her keen interest
+                    and aptitude for research while working on the project.
+                    {%endif%}
+                    
+
+                    {%if student.is_paper == 'Yes'%}
+                    In fact, she was also able to publish a paper on {{paper.paper_title}}.
+                    {%endif%}
+
+                </p>
+                
+
+                <p><br>I have noted her {{quality.presentation}} presentation skills while she presented her work at our
+                    department as well as in the conference.
+                    {%if quality.leadership or quality.teamwork%}
+                    I have seen that she has good leadership capability and has a teamwork spirit.
+                    {%endif%}
+                    {%if quality.hardworking%}
+                    She is a very hardworking student who is always eager to learn.
+                    {%endif%}
+                    {%if quality.friendly%}
+                    She is a well-spoken person with a friendly and gentle personality.
+                    {%endif%}
+                    {%if quality.social%}
+                    She also has given his time to different social causes.
+                    {%endif%}
+                    She is very helpful and cooperative student. She eagerly handed over her
+                    project work to her juniors who wanted to further continue the research on the topic along
+                    with proper guidance and resources. I have also been impressed by her communication skills during
+                    project presentations and lectures.</p>
+
+
+                <p><br>I appreciate her technical and professional skills.
+                    {%if qualtiy.eca != 'No'%}
+                    Besides academics, she was also involved in several extra-curricular activities .
+                    She participated in various competitions organized in and off the campus.
+                    {%endif%}
+                    {%if project.deployed%}
+                    Unlike, most students who limit their project to an
+                    academic exercise, she actually deployed her project publicly in our server and maintained it.
+                    {%endif%}
+                    {%if student.intern%}
+                    She has worked in some IT companies which, I believe, has further added to her technical skills and
+                    professional experience.
+                    {%endif%}
+            
+                </p>
+
+                <p><br>I am quite confident that {{firstname}}'s skills coupled with academic capability will make her a
+                    good candidate for
+                    your university. Thus, I would highly recommend her for the graduate program at your esteemed
+                    university. Please feel free to contact me if further enquiry is required.</p>
+
+                <p><br>{{student.professor.name}},
+                    <br>{{student.professor.title}},
+                    <br>Department of {{student.professor.department}} Engineering
+                    <br>Pulchowk Campus, Institute of Engineering, Tribhuvan University
+                    <br>Phone: {{student.professor.phone}}
+                    <br>Mail: {{student.professor.email}}
+                </p> 
+
+
+
+ 
+            {% endif %}
+
+            </div>
+
+  
+
+    
+
+
+    <input name="roll" value="{{student.std.roll_number}}" type="hidden">
+    <!-- <textarea name="textarea" id="textarea" hidden="true"></textarea>  -->
+
+    <textarea name="textarea1" id="textarea1" hidden="true"></textarea>
+    <textarea name="textarea2" id="textarea2" hidden="true"></textarea>
+    <textarea name="textarea3" id="textarea3" hidden="true"></textarea>
+
+
+
+    <div class="button">
+        <input type="submit" id="btn" value="Submit" onclick="Exchangevalue()">
+    </div>
+    </form>
+  </div>
+</div>
+<script>
+    // var textbox= document.getElementById("textbox");
+    // var textbox1= document.getElementById("1");
+    // var textbox2= document.getElementById("2");
+    // var textbox3= document.getElementById("3");
+    var container = document.getElementById('whole_file')
+
+
+    function Exchangevalue() {
+        // var textarea= document.getElementById("textarea");
+        // textarea.value=textbox.innerText;
+        // console.log(textarea.value);
+        var textarea1 = document.getElementById("textarea1");
+        textarea1.value = container.innerText;
+        // var textarea2= document.getElementById("textarea2");
+        // textarea2.value=textbox2.innerText;
+        // var textarea3= document.getElementById("textarea3");
+        // textarea3.value=textbox3.innerText;
+    };
+</script>
+{% endblock body %}

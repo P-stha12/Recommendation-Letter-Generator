@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Forgot Password {% endblock title %}
+{% block body %}
+
+
+<div class="container">
+
+    <form action="checkEmail" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-sm-12 col-8">
+                <div class="password-validation">
+
+                    <input class="input100" type="email" id="email" name="email" placeholder="Enter Email">
+
+
+                </div>
+            </div>
+            <div class="col"></div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="container-login100-form-btn">
+
+                    <a>
+                        <button class="login100-form-btn" id="searchButton" name="ValidPwdBtn"
+                            onclick="exchangeValue();">
+                            Search
+                            <div class="input-box">
+                                <input type="hidden" id="input-box" name="user_email" readonly>
+                            </div>
+                        </button>
+
+                    </a>
+                </div>
+            </form>
+
+            </div>
+
+    
+<div class="col-6">
+    <form action="loginTeacher">
+    <div class="container-login100-form-btn">
+        <a href="loginTeacher">
+            <button class="login100-form-btn">
+                Cancel
+            </button>
+        </a>
+    </div>
+</form>
+</div>
+    
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+    function exchangeValue() {
+
+
+        var inputBox = document.getElementById("input-box");
+        var username = document.getElementById("email").value;
+        inputBox.value = username;
+
+        console.log(inputBox);
+
+    }
+
+
+
+</script>
+
+
+{% endblock body %}

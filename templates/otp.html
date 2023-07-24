@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}OTP{% endblock title %}
+
+{% block body %}
+
+<div class="container">
+    <div class="card">
+        <h4 class="card-header">Enter OTP code</h4>
+        <div class="card-body">
+            <h6 class="card-title">We have sent OTP code to '{{teacherkonam.email }}' :</h6>
+            <br>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-3">
+                    <input type="text" class="form-control" id="OTP" placeholder="OTP" aria-label="OTP"
+                        aria-describedby="basic-addon1">
+                </div>
+               
+               
+                <div class="col">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col"> <a href="forgotPassword">Didn't get OTP code</a></div>
+               
+                <div class="col-2">
+                    <a href="loginTeacher"  class="btn btn-secondary"> 
+                            Cancel</a>
+                </div>
+
+                <div class="col-2">
+                <form action="OTP_check" method="POST">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <input type="hidden" id="OTP_check_value"  name="user_typed_OTP_value" readonly>
+                    </div> 
+                    <button type="submit" id="OTP_btn" onclick="exchangeValue();" class="btn btn-primary">Continue</button>
+                </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+// exchanging value of otp from userinput to another input so that it can be fetched
+    function exchangeValue() {
+    var  OTP_value = document.getElementById("OTP").value;
+    var  OTP_value_check = document.getElementById("OTP_check_value");;
+    OTP_value_check.value = OTP_value;
+        
+
+    }
+    // OTP_value = document.getElementById("OTP").value;
+    // OTP_check_value = document.getElementById("OTP_check_value");
+    // // OTP_link = document.getElementById("OTP_link");
+    // OTP_btn = document.getElementById("OTP_btn");
+    // OTP_btn.onclick = function () {
+    //     OTP_check_value.value = OTP_value;
+    //     console.log(OTP_check_value);
+        // if (OTP_value === OTP_check_value) {
+        //     var xhtp = new XMLHttpRequest();
+        //     xhtp.open("GET", 'http://127.0.0.1:8000/otp', true);
+        //     xhtp.onload = function () {
+        //         OTP_link.href = "http://127.0.0.1:8000/validatePassword";
+
+        //     }
+        // }
+        // else {
+        //     alert("Please enter correct OTP");
+        // }
+
+   
+
+</script>
+
+{%endblock body%}

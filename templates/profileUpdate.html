@@ -1,0 +1,31 @@
+{% extends 'base2.html' %}
+{% block title %}Change Profile {% endblock title %}
+{% block teacher %}<a href="teacher"><img src="{{teacher.images.url}}" style="width:33px;height:33px; border-radius: 50%;" ></a>{% endblock teacher %}
+{% block body %}
+<div class="container" style="margin-top:50px;">
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+    <div class="row">
+    {{teacher.name}}
+      <img src="{{teacher.images.url}}" style="width:150px;height:100px;" >
+      </div>
+      <div class="row-1"> 
+       
+    <form method = "POST" enctype="multipart/form-data" action="{% url 'profileUpdateRequest' %}">
+        {% csrf_token %}
+        <input type="file" name="file">
+        <br>
+        <button class="btn btn-outline-secondary" style="margin:10px;" type="submit">Upload</button>
+    </form>
+
+      </div>
+    </div>
+   
+  </div>
+</div>
+ </div>
+
+   {% endblock body %}
+
+

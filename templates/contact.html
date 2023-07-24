@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+{% block title %}Contact Us{% endblock title %}
+{% block body %} 
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+</svg>
+{% if messages %}{% for message in messages %}
+<div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+  <div>
+    {{message}}
+  </div>
+</div>
+{% endfor %}{% endif %}
+<form class="login100-form validate-form" method="POST" id="form" action="feedback">
+    {% csrf_token %}
+    <div class="container">
+        <div class="form-check">
+
+            <div class="row">
+                <label class="form-check-label" for="invalidCheck2">
+                    <h3>Your Message</h3>
+                </label>
+                <br>
+
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <label class="form-check-label" for="invalidCheck2">
+                            First Name
+                        </label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control text-area" name="first_name" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"></input>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-check-label" for="invalidCheck2">
+                            Last Name
+                        </label>
+                        <div class="input-group mb-3">
+
+                            <input type="text" class="form-control text-area" name="last_name" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"></input>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <label class="form-check-label" for="invalidCheck2">
+                    Email
+                </label>
+                <div class="input-group mb-3">
+
+                    <input type="email" class="form-control text-area" name="email" aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default" required></input>
+                </div>
+                <br>
+
+                <label class="form-check-label" for="invalidCheck2">
+                    Enter Your Message
+                </label>
+                <div class="input-group mb-3">
+
+                    <textarea class="form-control text-area" name="feedback" aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"></textarea>
+                </div>
+            </div>
+            <input type="submit" class="login100-form-btn" id="btn" onclick="click()" value="Submit"></input>
+
+
+        </div>
+    </div>
+</form>
+
+
+
+
+{%endblock body %}

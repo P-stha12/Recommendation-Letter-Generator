@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<main>
+   <section class="presentation">
+      <div class="introduction">
+         <div class="intro-text">
+            <h1>Recommendation Letter Generator</h1>
+            <p>
+               This is an official portal from Pulchowk Campus
+               for the process of making <br>Recommendation Letter
+               for students willing to proceed their further studies foreign.
+            </p>
+         </div>
+
+
+         <div class="cta">
+            <a href="/registerStudent"><button class="cta-add">Register Student</button></a>
+            <a href="/loginStudent"><button class="cta-add">I am a Student</button></a>
+            <a href="/loginTeacher"><button class="cta-add">I am a Professor</button></a>
+         </div>
+      </div>
+      {% comment %} <div class="cover">
+         <img src="../static/images/img/character.svg" alt="character" />
+      </div> {% endcomment %}
+   </section>
+</main>
+{% endblock body %}

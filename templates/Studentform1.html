@@ -1,0 +1,196 @@
+{% extends 'studentBase.html' %}
+{% block title %}Request{% endblock title %}
+
+{% block body %}
+  {% if messages %}{% for message in messages %}
+  <div class="alert alert-success d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    <div>
+      {{message}}
+    </div>
+  </div>
+  {% endfor %}{% endif %}
+  <div class="container">
+    <div class="title">Hey {{naam}}!</div>
+    <div class="content">
+      <form method="POST" action="/studentform1">
+      {% csrf_token %}
+        <div class="user-details">
+          <!-- <div class="input-box">
+            <span class="details">Requesting University</span>
+            <input type="text" placeholder="University Name" name="university" required>
+          </div> -->
+          <div class="input-box">
+            <span class="details">University's Email</span>
+            <input type="email" placeholder="Email" name="email" required>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Requesting Professor</span>
+             <select name="prof" id="teacher" required>
+               <option>---</option>
+               {% for teacher in teachers %}
+               <option value="{{teacher.unique_id}}">{{teacher.name}} | {{teacher.unique_id}}</option>
+               {% endfor %}
+             </select>
+           </div>
+
+          <div class="input-box">
+          <span class="details">Years professor has known you for:</span>
+            <!-- <input type="text" placeholder="Choose Professor" required> -->
+            <select name="yrs" required>
+              <option></option>
+              <option>1 year</option>
+              <option>2 years</option>
+              <option>3 years</option>
+              <option>4 years</option>
+            </select>
+          </div>
+          
+          <div class="input-box" >
+          <div class="multiselect">
+          <div class="selectBox" onclick="showCheckboxes()" >
+           <span class="details">Subjects</span>
+            <select name="subject" id="subject"  >
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div id="checkboxes">
+            <span  id="one">
+            </span> 
+          </div>
+          </div>
+        </div>
+
+          <div class="input-box">
+            <span class="details">Final Year Project:</span>
+            <input type="text" name="sproject" required>
+          </div>
+
+          <div class="input-box">
+            <span class="details">He/she supervised Final Project?</span>
+            <select name="is_project" required>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          
+          <div class="input-box">
+            <span class="details">Other Project Name(if supervised):</span>
+            <input type="text" name="pro1">
+          </div>
+
+          <div class="input-box">
+            <span class="details">Paper Published</span>
+            <select name="has_paper" required>
+              <option></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Link for paper (if published):</span>
+            <input type="text" name="paper_link">
+          </div>
+
+          <div class="input-box">
+            <span class="details">Paper Title (if published):</span>
+            <input type="text" name="paper_title">
+          </div>
+
+          
+
+          <div class="gender-details">
+          <span class="gender-title">Other</span>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="deploy" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Deployed a Project
+            </label>
+          </div>
+
+          
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="intern" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Done internship
+            </label>
+          </div>
+          </div>
+          
+          <div class="input-box">
+            <input type="hidden" value="{{roll}}" name="roll" readonly>
+          </div>
+
+          <div class="input-box">
+            <input type="hidden" value="{{naam}}" name="naam" readonly>
+          </div>
+
+          <div class="button">
+            <input type="submit" value="  Next  " />
+          </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+      $(document).ready(function(){
+          //handle selected teacher
+          $('select#teacher').change(function () {
+             
+              var optionSelected = $(this).find("option:selected");//finds selected option
+              
+              var valueSelected  = optionSelected.val();
+              var teacher_name   = valueSelected
+              
+              console.log(teacher_name)
+                  
+               $.ajax({
+                  url: '/getdetails',
+                  type: 'GET',
+                  data: { 'd_name': JSON.stringify(teacher_name )},//converting into json string
+                   success:    function(result){
+                       console.log(result)
+                                  //remove previous selections
+                               $("#subject option").remove();
+                                   //add a blank option
+                                  //  $("#teacher").append('<option id="hell"></option>');
+
+                                  $("#subject").append('<option >Select Subject</option>');//appending on the select
+
+                                   //append new options returned
+                                   $("#one span").remove();
+                                   for (var i = result.length - 1; i >= 0; i--) {
+                                 
+                                     $("#one").append( '<span id="span" class="details" > <input type="checkbox" class="dropdown" name="subject'+[i]+'"  value="'+result[i].subject_name +'">' + result[i].subject_name+' </span>'  );//appending on the select
+                                      
+
+                                  };
+                               }
+               });
+          });
+      });
+
+  
+      var expanded = false;
+
+function showCheckboxes() {
+var checkboxes = document.getElementById("checkboxes");
+if (!expanded) {
+checkboxes.style.display = "block";
+expanded = true;
+} else {
+checkboxes.style.display = "none";
+expanded = false;
+}
+}
+     
+</script>
+
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends 'studentBase.html' %}
+{% block title %}Success{% endblock title %}
+
+{% block body %}
+
+{% if letter%}
+<center><img src="../static/images/notification.png" style="width:20%" /></center>
+<h1 style="text-align:center">Congratulations! Your letter has been sent.</h1>
+
+
+{% comment %} <form action='/studentfinal' method='POST'>
+    {% csrf_token %}
+
+   <div class="container-login100-form-btn">
+        <button class="login100-form-btn mx-auto "   target="blank" type='submit' value="{{roll}}" name="roll">
+           View 
+        </button>
+    </div>
+ 
+
+
+</form> {% endcomment %}
+{% else %}
+<br>
+<center><img src="../static/images/requested.png" style="width:20%" /></center>
+<h1 style="text-align:center">Your request has been successfully submitted.</h1>
+{% comment %} <p style="text-align:center;font-size:18px;"><br>You will have your letter here when professor provides it.<br>Don't worry you'll receive an email once done. </p> {% endcomment %}
+{% endif %}
+
+{% endblock body %}

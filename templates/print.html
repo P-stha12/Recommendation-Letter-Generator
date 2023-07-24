@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @page {
+        size: A4 portrait;
+        margin: 2.5cm;
+
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 25px;
+            }
+    p{
+        font-size: 14px;
+        text-align: justify;
+        line-height: 1.6;
+    }
+    </style>
+</head>
+ 
+<body>
+
+    <h1>Letter of Recommendation</h1>
+    
+    <p>I would like to recommend <b>{{student.name}}</b> for admission to the graduate program at your university.
+        I have known {{student.name}} for about {{student.years_taught}} now as an undergraduate student
+        in {{student.std.program}} engineering. I have taught him courses on <student.courses>.
+        Moreover, I was the supervisor for his final year project. I taught him {{student.subjects}} </p>
+
+
+
+    <p>I recall <student.firstname> as a sincere and hardworking student. 
+        He maintained excellent academic performance throughout his undergraduate 
+        ranking among the top <percent> students of his batch. As an instructor and his supervisor
+        too I had enough opportunity is observe his capabilities closely.</p>
+
+    <p>I was the supervisor in his project titled <student/project_title> . I was
+        quite impressed by his hardworking nature and learning capability.I could observe his keen interest 
+        and aptitude for research while working on the project.
+        {{student.project}}
+        {%if student.paper == 'yes'%}
+        In fact, at the end of the project, he was also able to publish a paper.</p>
+        {%endif%}
+        
+    <p>I have noted his {{student.presentation}} presentation skills while he presented his work at our department as well as in the
+        conference.
+        {%if student.quality1 and student.quality2%}
+        I have seen that he has good {{student.quality1}}and also has good {{student.quality2}} qualities.
+        {%endif%}
+        He is a well-spoken person with a friendly and gentle personality. He is very helpful and cooperative student. He eagerly 
+        handed over his project work to his juniors who wanted to further continue the research on the topic along 
+        with proper guidance and resources. I have also seen his presentation and communication skills during his 
+        project and paper presentations.</p>
+        
+        {%if student.eca == 'yes'%}
+        <p>I appreciate his technical and professional skills. Unlike, most students who limit their project to an 
+        academic exercise, he  was also active in extra-curricular activities. Besides academics, he was also 
+        involved in several activities in and off the campus. He participated in various hackathons.</p> 
+        {%endif%}
+
+    <p>I am quite confident that <student.firstname> skills coupled with academic capability will make him a good candidate for 
+        your university. Thus, I would highly recommend him for the graduate program at your esteemed 
+        university. Please feel free to contact me if further enquiry is required.</p>
+
+    <p>{{student.professor.name}}, PhD 
+      <br>{{student.professor.title}},
+     <br>Department of {{student.professor.department}} Engineering
+      <br>Pulchowk Campus, Institute of Engineering, Tribhuvan University
+     <br>Phone:{{student.professor.phone}} 
+     <br>Mail: {{student.professor.email}}</p>
+
+    
+</body>
+</html>

@@ -1,0 +1,253 @@
+{% extends 'base2.html' %} {% block title %}Generate{% endblock title %} 
+{% block teacher %}<a href="teacher"><img src="{{teacher_model.images.url}}" style="width:33px;height:33px; border-radius: 50%;" ></a>{% endblock teacher %} 
+{% block body %}
+<div class="container">
+  <div class="title">{{student.name}} has given these informations:</div>
+  <br />
+  <img src="{{files.Photo.url}}" class="rounded mx-auto d-block"  
+        height="100px"
+        width="100px"
+        border-radius="50%" 
+        border-color = "black"         
+        alt="Avatar">
+  <span class="details">You've known this student for: {{student.years_taught}}</span> <br />
+  <span class="details">You've taught: {{student.subjects}}</span> <br />
+
+  <span class="details">University: {{university.uni_name}}</span> <br />
+  <span class="details">University Deadline: {{university.uni_deadline}}</span> <br />
+  <span class="details">Program Applied: {{university.program_applied}}</span> <br />
+
+  <span class="details">GPA: {{academics.gpa}}</span> <br />
+  <span class="details">Tentative Ranking: {{academics.tentative_ranking}}</span> <br />
+
+  <span class="details">Supervised Project: {{project.supervised_project}}</span>
+  <br />
+  
+  <span class="details">Other projects: {{project.final_project}}</span>
+  <br />
+  <br/>
+  <!-- Button trigger modal -->
+  
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+  Show transcript
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Transcript</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{files.transcript.url}}" 
+        height="100%"
+        width="100%">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <br />
+  <br/>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+    Show CV
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">CV</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{{files.CV.url}}" 
+          height="100%"
+          width="100%">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  {% if student.paper == "Yes" %}
+  <span class="details">Paper: <a target="_blank" href="{{paper.paper_link}}">{{paper.paper_title}}</a></span> <br />
+  {% endif %}
+  
+
+  <!-- <div class="title">Give Information for {{student.name}}</div> -->
+  <br />
+  <div class="content">
+    <form method="POST" , action="/edit" >
+      {% csrf_token %}
+       <div class="user-details">
+      <!--  <div class="input-box">
+          <span class="details">Presentation skills:</span>
+          <select name="presentation" required>
+            <option></option>
+            <option>good</option>
+            <option>outstanding</option>
+            <option>excellent</option>
+          </select>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Extracirricular Activities</span>
+          <select name="eca" required>
+            <option></option>
+            <option>Yes</option>
+            <option>No</option>
+
+          </select>
+        </div>
+        <div class="input-box">
+          <span class="details">Academics Performance:</span>
+          <select name="acad" required>
+            <option></option>
+            <option>topper</option>
+            <option>top 10 %</option>
+            <option>finest</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <span class="details">Qualitiy:</span>
+          <select name="qual" required>
+            <option></option>
+            <option>sincere and hardworking</option>
+            <option>confident and responsible</option>
+            <option>diligent and competitive</option>
+          </select>
+        </div>
+
+        {% comment %}
+        <div class="input-box">
+          <span class="details">Project Details</span>
+          <input type="text" name="quality3" />
+        </div>
+        {% endcomment %}
+
+        <div class="gender-details">
+          <span class="gender-title">Personal Qualities</span>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality1" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Leadership
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality2" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Hardworking
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality3" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Social
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality4" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Teamwork
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality5" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Friendly
+            </label>
+          </div>
+          <div class="input-box">
+            <input type="hidden" value="{{roll}}" name="roll" readonly />
+          </div>
+          <div class="button">
+            <input type="submit" value="Submit" />
+          </div>
+
+        </div>-->
+        <div class="input-box">
+          <span class="details">Presentation skills:</span>
+          <select name="presentation" required>
+            <option></option>
+            <option>good</option>
+            <option>outstanding</option>
+            <option>excellent</option>
+          </select>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Qualitiy:</span>
+          <select name="qual" required>
+            <option></option>
+            <option>sincere and hardworking</option>
+            <option>confident and responsible</option>
+            <option>diligent and competitive</option>
+          </select>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Recommend:</span>
+          <select name="recommend" required>
+            <option></option>
+            <option>strongly</option>
+            <option>firmly</option>
+          </select>
+        </div>
+
+        <div class="gender-details">
+          <span class="gender-title">Personal Qualities</span>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality1" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Leadership
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality2" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Hardworking
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality3" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Social
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality4" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Teamwork
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="quality5" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault">
+              Friendly
+            </label>
+          </div>
+        </div>
+       
+    </div> 
+  
+  <div class="input-box">
+    <input type="hidden" value="{{roll}}" name="roll" readonly />
+  </div>
+  <div class="button">
+    <input type="submit" value="Submit" />
+  </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+{% endblock body %}

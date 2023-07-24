@@ -1,0 +1,186 @@
+{% extends 'base2.html' %}
+
+{% block title %}Requests{% endblock title %}
+{% block teacher %}<a href="teacher"><img src="{{teacher_model.images.url}}" style="width:33px;height:33px; border-radius: 50%;" ></a>{% endblock teacher %}
+
+{% block body %}
+<h1 style="text-align:center"><br><u> Requests:</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" onClick="window.location.reload()">Refresh</button></h1>
+
+<div class="container-fluid">
+  {% if check_value %}
+  <center><img src="../static/images/404.png" style="width:20%" /><center/>
+  <h5 style="text-align:center">Yeah! You have no request for now from students.</h5>
+
+
+  {%else %}
+  {% for student in student_list %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">{{student.name}}</h4>
+    <p>This person has requested you for the recommendation letter.</p>
+    <hr>
+    <form action='/makeLetter' method='POST' target="_blank">
+      {% csrf_token %}
+
+      <div class="container-login100-form-btn">
+        <button class="login100-form-btn" type='submit' value="{{student.std.roll_number}}" name="roll">
+          CREATE
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+  {% endfor %}
+  {%endif %}
+  <br>
+  <br>
+  <br>
+  <h1>Students You Have Recommended:</h1>
+    <div class="container-login100-form-btn">
+      <button class="login100-form-btn navbar-toggler" id="btn" data-bs-toggle="collapse" data-bs-target="#navbarNav3" aria-controls="navbarNav3" aria-expanded="false" aria-label="Toggle navigation" target="blank" type='submit' value="{{roll}}" name="roll" style="margin-bottom:30px;">
+        View
+      </button>
+    </div>
+  
+
+
+    <div class="collapse navbar-collapse" id="navbarNav3">
+      <table id="table">
+        {% comment %} <thead class="thead-light">
+          <tr>
+            <th class="fs-5" scope="col" id="id"></th>
+            <th class="fs-5" scope="col" id="col-stdname"></th>
+            <!-- <th class="fs-5" scope="col" id="col-university"></th> -->
+            <th class="fs-5" scope="col" id="col-email"></th>
+          </tr>
+        </thead> {% endcomment %}
+        <tbody>
+
+          
+          <tr id="tr-no-{{ forloop.counter0 }}" value="{{forloop.counter0}}">
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+          {% for item in all_students %}
+          <tr>
+              <td class="fs-5">{{item.name}}</td>
+              <td class="fs-5">{{item.email}}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+      {% comment %} </table> {% endcomment %}
+    </div> 
+
+
+
+
+</div>
+
+<script>
+//table heading
+  var pagecounter = 1;
+  var heading_id = document.getElementById("id");
+  var heading_nameharu = document.getElementById("col-stdname");
+  var heading_email = document.getElementById("col-email");
+  // var heading_universityharu = document.getElementById("col-university");
+
+//parsing models as JSON data
+  var students = JSON.parse('{{ std_dataharu | safe }}');
+  n=students.length;
+
+//calling ID
+  var button = document.getElementById("btn");
+  var tablee = document.getElementById("table")
+
+
+//making array to store harek table row ko table column values
+var tr_no=[];
+var id_no=[];
+var nameharu=[];
+// var universityharu=[];
+var email=[];
+
+
+//table data
+for (let i=0; i<n; i++) {
+ 
+var table = document.getElementsByTagName("table")[0];
+  tr_no[i]= table.rows[i+1];
+ id_no[i]= tr_no[i].cells[0];
+ nameharu[i]= tr_no[i].cells[1];
+//  universityharu[i]= tr_no[i].cells[2];
+ email[i]= tr_no[i].cells[2];
+
+
+
+
+}
+
+function loadAjax(){
+   var ourRequest = new XMLHttpRequest();
+
+    //after GET mentioning the location where ajax is to be used
+    ourRequest.open("GET", "http://127.0.0.1:8000/loginTeacher", true);
+    ourRequest.onload = function  () {
+
+      heading_id.innerHTML = '#'
+      heading_nameharu.innerHTML = 'Name'
+      // heading_universityharu.innerHTML = 'University'
+      heading_email.innerHTML = 'Email'
+
+      for (var i = 0; i < students.length; i++) {
+
+      
+        id_no[i].innerHTML+=i + 1 + "<br>";
+        nameharu[i].innerHTML+=students[i].fields.name + "<br>";
+        // universityharu[i].innerHTML += students[i].fields.uni + "<br>";
+        email[i].innerHTML += students[i].fields.email + "<br>";
+
+
+      }
+
+
+    };
+    ourRequest.send();
+
+}
+
+
+//counts the click
+clickCounter=0;
+  // adding event of button 
+
+  //to show and hide the table on consecutive click
+  
+  button.addEventListener("click", function () {
+    
+  
+    if(clickCounter==0){
+
+    tablee.classList.add("table","table-striped","table-hover") 
+
+    loadAjax();
+    }
+    
+    
+    else if(clickCounter%2!=0){
+    tablee.classList.add("hide-table") 
+    console.log("click")
+    }
+
+  //this is to show only table without loading ajax again
+    else{
+      tablee.classList.remove("hide-table") 
+    tablee.classList.add("table","table-striped","table-hover") 
+    }
+
+    clickCounter+=1;
+    
+  });
+
+
+
+</script>
+{% endblock body %}

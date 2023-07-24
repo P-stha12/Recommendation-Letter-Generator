@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Register Student{% endblock title %}
+{% block body %}
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	  </symbol>
+	</svg>
+    {% if messages %}
+    {% for message in messages %}
+	<div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+		<div>
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title" style="background-image: url(static/images/bg-01.jpg)">
+                    <span class="login100-form-title-1"> Register Student </span>
+                </div>
+
+                <form onsubmit="return handleSubmit()" class="login100-form validate-form" method="POST" action="/registerStudent">
+                    {% csrf_token %}
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Full Name :</span>
+                        <input class="input100" id="floatingInput" type="text" name="name" required/>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Password :</span>
+                        <input class="input100" id="floatingInput" type="password" name="pass" required/>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Confirm Password :</span>
+                        <input class="input100" id="floatingInput" type="password" name="confirmPass" required/>
+                        <span class="focus-input100"></span>
+                    </div>
+                    
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Roll Number :</span>
+                        <input class="input100" id="floatingInput" type="text" name="roll" placeholder="075BCT049" required/>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Date of Birth :</span>
+                        <input class="input100" id="floatingInput" type="text" name="dob" placeholder="2000-09-05" required/>
+                        <span class="focus-input100"></span>
+                    </div>
+                    
+                    <div style="margin-top:25px;position:relative;width:100%;" class="form-made" data-validate="Gender is required">
+                        <span class="details">Gender:</span>
+                        <div style="display:flex; gap:10px;">
+                            <div style="display:flex; gap:2px;">
+                                <input style="border:2px dotted #00f;display:inline;background:#ff0000;" type="radio" id="male" name="gender" value="Male">
+                                <label for="male">Male</label>
+                            </div>
+                            <div style="display:flex;gap:2px;">
+                                <input style="border:2px dotted #00f;display:inline;background:#ff0000;" type="radio" id="female" name="gender" value="Female">
+                                <label for="female">Female</label>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div style="margin-top:25px;position:relative; width: 100%;" class="form-made" data-validate="Department is required">
+                        <span class="details">Department:</span>
+                          <select name="department" required>
+                            {% if departments %}
+                            {% for depart in departments %}
+                            <option> {{ depart.dept_name }} </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                    </div>
+
+                    <div style="margin-top:25px;position:relative; width: 100%;" class="form-made" data-validate="Department is required">
+                        <span class="details">Program:</span>
+                        <select name="program" required>
+                            {% if programs %}
+                            {% for program in programs %}
+                            <option> {{ program.program_name }} </option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                   
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% endblock body %}

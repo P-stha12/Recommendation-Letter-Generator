@@ -1,0 +1,136 @@
+{% extends 'studentBase.html' %}
+{% block title %}Request{% endblock title %}
+
+{% block body %}
+  <div class="container">
+    <div class="title">Additional Info</div>
+    <div class="content">
+      <form method="POST", action="/studentform2" , enctype='multipart/form-data'>
+      {% csrf_token %}
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Requesting University</span>
+            <input type="text" placeholder="University Name" name="university" required>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Program Applied</span>
+            <input type="text" placeholder="Program Applied" name="program_applied" required>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Deadline</span>
+              <input type="date" name="deadline" required>
+            </div>
+
+          <div class="input-box">
+            <span class="details">GPA:</span>
+            <input type="text" name="gpa" required>
+          </div>
+
+          <div class="input-box">
+            <span class="details">Tentative Ranking</span>
+            <select name="tentative_ranking" required>
+              <option></option>
+              <option>Batch Topper</option>
+              <option>Top 5%</option>
+              <option>Top 10%</option>
+              <option>Top 20%</option>
+              <option>Top 30%</option>
+              <option>Top 40%</option>
+            </select>
+          </div>
+
+          <div class="input-box">
+              <span class="details">Transcript</span>
+              <input type="file" name="transcript" required>
+          </div>
+
+            <div class="input-box">
+                <span class="details">Recent CV</span>
+                  <input type="file" name="cv" required>
+                </div>
+                
+                <div class="input-box">
+                  <span class="details">Photo</span>
+                  <input type="file" name="photo" required>
+                </div>
+                
+                <!-- <div class="input-box">
+                  <span class="details">Presentation skills:</span>
+                  <select name="presentation" required>
+                    <option></option>
+                    <option>good</option>
+                    <option>outstanding</option>
+                    <option>excellent</option>
+                  </select>
+                </div> -->
+                
+                <div class="input-box">
+                  <span class="details">Extracurricular Activities</span>
+                    <input type="text" name="extraCurricular" required>
+                  </span>
+              </div>
+             
+              <!-- <div class="input-box">
+                <span class="details">Qualitiy:</span>
+                <select name="qual" required>
+                  <option></option>
+                  <option>sincere and hardworking</option>
+                  <option>confident and responsible</option>
+                  <option>diligent and competitive</option>
+                </select>
+              </div> -->
+      
+              <!-- <div class="input-box">
+                <span class="details">Project Details</span>
+                <input type="text" name="quality3" />
+              </div> -->
+          
+      
+              <!-- <div class="gender-details">
+                <span class="gender-title">Personal Qualities</span>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="quality1" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Leadership
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="quality2" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Hardworking
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="quality3" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Social
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="quality4" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Teamwork
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="quality5" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Friendly
+                  </label>
+                </div>
+              </div> -->
+                
+        <div class="input-box">
+          <input type="hidden" value="{{roll}}" name="roll" readonly>
+        </div>
+          <div class="button">
+            <input type="submit" value="  Submit  " />
+          </div>
+      </form>
+    </div>
+  </div>
+
+  
+{% endblock body %}

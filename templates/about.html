@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock title %}
+
+{% block body %}
+<main>
+   <section class="presentation">
+      <div class="introduction">
+         <div class="intro-text">
+            <h1>About</h1>
+            <p style="text-align: justify;">
+               This is an official portal from Pulchowk Campus
+               for the process of making Recommendation Letter
+               for students willing to proceed their further foreign studies. <br><br>
+               Here you can ask professor for the letter if you are graduated student from Pulchowk Campus.
+               If you are a registered professor for creating letter in this portal , you can make letter for students
+               who has requested you by clicking I am professor button and logging in.
+            </p>
+         </div>
+
+
+         {% comment %} <div class="cta">
+            <a href="/loginStudent"><button class="cta-add">I am a Student</button></a>
+            <a href="/loginTeacher"><button class="cta-add">I am a Professor</button></a>
+            <a href="/registerStudent"><button class="cta-add">Register Student</button></a>
+         </div> {% endcomment %}
+      </div>
+      <div class="cover">
+         <img src="../static/images/img/character.svg" alt="character" />
+      </div>
+   </section>
+</main>
+{% endblock body %}
