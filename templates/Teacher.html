@@ -15,7 +15,12 @@
   {%else %}
   {% for student in student_list %}
   <div class="alert alert-success" role="alert">
+    {% if student.reapplied %}
+    <h4 class="alert-heading">{{student.name}} (re-applied)</h4>
+    <button class="alert alert-success"><a href = "media/letter/{{student.std.roll_number}}.pdf">View Letter</a></button>
+    {% else %}
     <h4 class="alert-heading">{{student.name}}</h4>
+    {% endif %}
     <p>This person has requested you for the recommendation letter.</p>
     <hr>
     <form action='/makeLetter' method='POST' target="_blank">
@@ -66,6 +71,7 @@
           <tr>
               <td class="fs-5"><a href="/studentDetailTeacher/{{item.std.roll_number}}">{{item.name}}</a></td>
               <td class="fs-5">{{item.email}}</td>
+              <td class="fs-5"><a href = "media/letter/{{item.std.roll_number}}.pdf">View Letter</a></td>
             </tr>
         {% endfor %}
 

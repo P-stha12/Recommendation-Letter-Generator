@@ -65,10 +65,11 @@ class TeacherInfo(models.Model):
 
 class StudentData(models.Model): 
     name = models.CharField(max_length=122,null=True,blank=True)
-    email = models.EmailField(null=True,blank=True)
+    universities = models.CharField(null=True,blank=True, max_length=1000)
     professor = models.ForeignKey(TeacherInfo, on_delete= CASCADE)
     std = models.ForeignKey(StudentLoginInfo, on_delete= CASCADE)
-    is_generated = models.BooleanField(default=False) 
+    is_generated = models.BooleanField(default=False)
+    reapplied = models.BooleanField(default=False) 
     years_taught= models.CharField(max_length=10, null=True, blank=True)
     is_pro = models.CharField(max_length=3,default="null")
     subjects= models.CharField(max_length=500, null=True, blank=True)
