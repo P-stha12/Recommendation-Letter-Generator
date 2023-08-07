@@ -171,9 +171,10 @@ def final(request, *args, **kwargs):
         '''
         text_to_pdf(letter,roll)
         student.is_generated = True
+        student.reapplied = False
         student.save() 
         # messages.error(request, "Sorry!  The Credentials doesn't match.")
-        send_mail('Recommendation Letter', 'Dear sir, Please find the recommendation letter attached with this mail. Link:127.0.0.1:8000/', 'ioerecoletter@gmail.com', [student.email], fail_silently=False)
+        #send_mail('Recommendation Letter', 'Dear sir, Please find the recommendation letter attached with this mail. Link:127.0.0.1:8000/', 'ioerecoletter@gmail.com', [student.email], fail_silently=False)
         return redirect("media/letter/"+roll+".pdf")
 
 def studentfinal(request, *args, **kwargs):
@@ -428,7 +429,7 @@ def studentform1(request):
     if request.method == "POST":
         naam = request.POST.get("naam")
         uroll = request.POST.get("roll")
-        uemail = request.POST.get("email")
+        uemail = request.POST.get("university")
         uprof = request.POST.get("prof")
         known_year = request.POST.get("yrs")
         
@@ -462,7 +463,7 @@ def studentform1(request):
                 prof = TeacherInfo.objects.get(unique_id=id)
                 info = StudentData(
                     name=stu.username,
-                    email=uemail,
+                    universities=uemail,
                     professor=prof,
                     std=stu,
                     is_pro=is_project,
@@ -561,6 +562,9 @@ def studentform2(request):
     
 
         stu_info = StudentData.objects.get(std__roll_number=uroll)
+        if(stu_info.is_generated):
+            stu_info.reapplied = true
+            stu_info.save()
 
 
         uni_info = University(
@@ -981,11 +985,12 @@ def studentDetailTeacher(request, roll):
     student = roll
     if StudentLoginInfo.objects.filter(roll_number = roll).exists():
         student = StudentLoginInfo.objects.get(roll_number = student)
+        alt = StudentData.objects.get(std__roll_number=student.roll_number)
         return render(
             request,
-            "studentDetails.html",
+            "studentDetailTeacher.html",
             {"username": student.username,'roll':student.roll_number, 'department': student.department,'program': student.program,'gender': student.gender,
-            'dob': student.dob},
+            'dob': student.dob, 'universities': alt.universities},
         )
     else:
         return render(
@@ -1391,10 +1396,12 @@ def teacher(request):
     generated_dataharu = StudentData.objects.filter(professor__unique_id=unique , is_generated=True)
 
     dataharu = StudentData.objects.filter(professor__unique_id=unique)
+    reapplied_dataharu = StudentData.objects.filter(professor__unique_id=unique, reapplied=True)
+
     number = len(dataharu)
     # to check if there is request or not on teachers page
     for data in dataharu:
-        if data.is_generated:
+        if (data.is_generated and not(data.reapplied)):
             value += 1
     datakolength = len(dataharu)
     if datakolength == value:
@@ -1414,6 +1421,7 @@ def teacher(request):
         "Teacher.html",
         {
             "all_students": generated_dataharu,
+            "reapplied": reapplied_dataharu,
             "student_list": non_generated,
             "check_value": check_value,
             "teacher_number": number,
