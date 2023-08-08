@@ -11,16 +11,10 @@
   <center><img src="../static/images/404.png" style="width:20%" /><center/>
   <h5 style="text-align:center">Yeah! You have no request for now from students.</h5>
 
-
   {%else %}
   {% for student in student_list %}
   <div class="alert alert-success" role="alert">
-    {% if student.reapplied %}
-    <h4 class="alert-heading">{{student.name}} (re-applied)</h4>
-    <button class="alert alert-success"><a href = "media/letter/{{student.std.roll_number}}.pdf">View Letter</a></button>
-    {% else %}
     <h4 class="alert-heading">{{student.name}}</h4>
-    {% endif %}
     <p>This person has requested you for the recommendation letter.</p>
     <hr>
     <form action='/makeLetter' method='POST' target="_blank">
@@ -35,8 +29,28 @@
     </form>
 
   </div>
-
   {% endfor %}
+
+  {% for student in reapplied %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">{{student.name}} (re-applied)</h4>
+    <button class="alert alert-success"><a href = "media/letter/{{student.std.roll_number}}.pdf">View Letter</a></button>
+    <p>This person has requested you for the recommendation letter.</p>
+    <hr>
+    <form action='/makeLetter' method='POST' target="_blank">
+      {% csrf_token %}
+
+      <div class="container-login100-form-btn">
+        <button class="login100-form-btn" type='submit' value="{{student.std.roll_number}}" name="roll">
+          CREATE
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+  {% endfor %}
+
   {%endif %}
   <br>
   <br>
