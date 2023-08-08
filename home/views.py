@@ -430,6 +430,7 @@ def studentform1(request):
         naam = request.POST.get("naam")
         uroll = request.POST.get("roll")
         uemail = request.POST.get("university")
+        print("uemail: ", uemail)
         uprof = request.POST.get("prof")
         known_year = request.POST.get("yrs")
         
@@ -476,7 +477,7 @@ def studentform1(request):
                 if StudentData.objects.filter(name=naam).exists():
                     info = StudentData.objects.get(name=naam)
                     info.name=stu.username
-                    info.email=uemail
+                    info.universities=uemail
                     info.professor=prof
                     info.std=stu
                     info.is_pro=is_project
@@ -563,7 +564,7 @@ def studentform2(request):
 
         stu_info = StudentData.objects.get(std__roll_number=uroll)
         if(stu_info.is_generated):
-            stu_info.reapplied = true
+            stu_info.reapplied = True
             stu_info.save()
 
 
@@ -647,7 +648,8 @@ def loginTeacher(request):
                 unique = request.COOKIES.get('unique')
 
                 teacher_model = TeacherInfo.objects.get(unique_id=unique)
-                generated_dataharu = StudentData.objects.get(professor__unique_id=unique , is_generated=True)
+                generated_dataharu = StudentData.objects.filter(professor__unique_id=unique , is_generated=True)
+                reapplied_dataharu = StudentData.objects.filter(professor__unique_id=unique , reapplied=True)
 
                 dataharu = StudentData.objects.filter(professor__unique_id=unique)
                 number = len(dataharu)
@@ -668,11 +670,13 @@ def loginTeacher(request):
                     is_generated=False, professor__unique_id=unique
                 )
 
+
                 response = render(
                     request,
                     "Teacher.html",
                     {
                         "all_students": generated_dataharu,
+                        "reapplied":reapplied_dataharu,
                         "student_list": non_generated,
                         "check_value": check_value,
                         "teacher_number": number,
@@ -715,6 +719,7 @@ def loginTeacher(request):
                 std_dataharu = serializers.serialize(
                     "json", StudentData.objects.filter(professor__unique_id=unique,is_generated=True)
                 )
+                reapplied_dataharu = StudentData.objects.filter(professor__unique_id=unique , reapplied=True)
                 non_generated = StudentData.objects.filter(
                     is_generated=False, professor__unique_id=unique
                 )
@@ -724,6 +729,7 @@ def loginTeacher(request):
                     "Teacher.html",
                     {
                         "all_students": generated_dataharu,
+                        "reapplied":reapplied_dataharu,
                         "student_list": non_generated,
                         "check_value": check_value,
                         "teacher_number": number,
@@ -986,6 +992,7 @@ def studentDetailTeacher(request, roll):
     if StudentLoginInfo.objects.filter(roll_number = roll).exists():
         student = StudentLoginInfo.objects.get(roll_number = student)
         alt = StudentData.objects.get(std__roll_number=student.roll_number)
+        print("universtities: ", alt.universities)
         return render(
             request,
             "studentDetailTeacher.html",
@@ -1397,6 +1404,7 @@ def teacher(request):
 
     dataharu = StudentData.objects.filter(professor__unique_id=unique)
     reapplied_dataharu = StudentData.objects.filter(professor__unique_id=unique, reapplied=True)
+    print("yeta aayo", reapplied_dataharu)
 
     number = len(dataharu)
     # to check if there is request or not on teachers page
