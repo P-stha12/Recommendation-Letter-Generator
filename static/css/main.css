@@ -544,3 +544,32 @@ input.input100 {
 }
 
 
+
+/* Styles for the new template view/edit buttons in Teacher.html */
+.btn-info, .btn-warning {
+    font-family: Poppins-Regular;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #fff;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    cursor: pointer;
+}
+
+.btn-info {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+}
+
+.btn-info:hover, .btn-warning:hover {
+    opacity: 0.8;
+}

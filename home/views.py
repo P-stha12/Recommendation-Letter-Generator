@@ -35,7 +35,34 @@ from django.core.mail import mail_admins
 # to create random number for OTP
 from random import randint
 
+from .models import Teacher, Template
+
 # Create your views here.
+
+@login_required
+def view_template(request):
+    try:
+        # Fetch the template associated with the logged-in teacher
+        teacher = Teacher.objects.get(user=request.user)
+        template = Template.objects.get(teacher=teacher)
+        return render(request, 'template_view.html', {'template_content': template.content})
+    except Template.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Template not found.'})
+
+@login_required
+def edit_template(request):
+    teacher = Teacher.objects.get(user=request.user)
+    template, created = Template.objects.get_or_create(teacher=teacher)  # Fetch or create a new template
+
+    if request.method == "POST":
+        new_content = request.POST.get('template_content')  # Assuming a textarea with name 'template_content' in the form
+        template.content = new_content
+        template.save()
+        return redirect('view_template')  # Redirect to view the updated template
+
+    return render(request, 'template_edit.html', {'template_content': template.content})
+
+# ... rest of your views ...
 
 
 def index(request):
@@ -685,7 +712,7 @@ def loginTeacher(request):
                     },
                 )
                 return response
-        return render(request, "loginTeacher.html")
+        return render(request, "loginTeacher.html") 
             
     value = 0
     if request.method == "POST":

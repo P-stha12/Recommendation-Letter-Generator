@@ -1,7 +1,17 @@
 {% extends 'base2.html' %}
 
+
+
+
 {% block title %}Requests{% endblock title %}
-{% block teacher %}<a href="teacher"><img src="{{teacher_model.images.url}}" style="width:33px;height:33px; border-radius: 50%;" ></a>{% endblock teacher %}
+{% block teacher %}<a href="teacher"><img src="{{teacher_model.images.url}}" style="width:33px;height:33px; border-radius: 50%;" ></a>
+
+<div style="margin-top: 20px;">
+  <a href="{% url 'view_template' %}" class="btn btn-info">View My Default Template</a>
+  <a href="{% url 'edit_template' %}" class="btn btn-warning">Edit My Default Template</a>
+</div>
+{% endblock teacher %}
+
 
 {% block body %}
 <h1 style="text-align:center"><br><u> Requests:</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" onClick="window.location.reload()">Refresh</button></h1>

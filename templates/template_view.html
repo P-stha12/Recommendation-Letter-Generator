@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Default Recommendation Letter Template:</h2>
+<div>
+    {{ template_content|safe }}
+</div>
+<a href="{% url 'edit_template' %}">Edit My Template</a>
+{% endblock %}

@@ -42,5 +42,10 @@ urlpatterns = [
     path('addSubjects', views.addSubjects, name='addSubjects'),
     path('deleteSubjects', views.deleteSubjects, name='deleteSubjects'),
     path('teacher', views.teacher, name='teacher'),
+
 ]
 
+urlpatterns += [
+    path('view_template/', views.view_template, name='view_template'),
+    path('edit_template/', views.edit_template, name='edit_template'),
+]

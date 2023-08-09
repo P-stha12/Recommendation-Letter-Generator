@@ -1,5 +1,25 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.contrib.auth.models import User
+
+# Assuming existing models like Department, Program, etc.
+
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Link to the Django User model for authentication
+    full_name = models.CharField(max_length=200)  # Full name of the teacher
+    # ... any other relevant fields ...
+
+    def __str__(self):
+        return self.full_name
+
+class Template(models.Model):
+    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE)  # Each teacher has one unique template
+    content = models.TextField()  # The default recommendation letter template content
+
+    def __str__(self):
+        return f"Template for {self.teacher.full_name}"
+
+# ... rest of your existing models ...
 
 class Department(models.Model):
     dept_name = models.CharField(max_length=100,blank=True, unique=True)
@@ -161,3 +181,7 @@ class Files(models.Model):
         return str(self.student) + " Files"
     class Meta:
         db_table = 'Files'
+
+
+# Assuming you're using Django's built-in User model for authentication
+

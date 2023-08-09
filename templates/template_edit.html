@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h2>Edit Your Default Recommendation Letter Template:</h2>
+    <textarea name="template_content" rows="20" cols="60">{{ template_content }}</textarea>
+    <br>
+    <input type="submit" value="Save Changes">
+</form>
+{% endblock %}
