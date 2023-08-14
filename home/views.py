@@ -45,37 +45,24 @@ from random import randint
 
 from .models import Template
 
-# Create your views here.
-
-
-@login_required
-def view_template(request):
-    try:
-        # Fetch the template associated with the logged-in teacher
-        teacher = TeacherInfo.objects.get(user=request.user)
-        template = Template.objects.get(teacher=teacher)
-        return render(request, 'template_view.html', {'template_content': template.content})
-    except Template.DoesNotExist:
-        return render(request, 'error.html', {'message': 'Template not found.'})
-
 
 @login_required
 def edit_template(request):
-    teacher = TeacherInfo.objects.get(user=request.user)
-    template, created = Template.objects.get_or_create(
-        teacher=teacher)  # Fetch or create a new template
+
+    full_name = request.user.get_full_name()
+    x = full_name.split(" ")
+    unique = x[0].lower()
+
+    template = Template.objects.get(teacher__unique_id=unique)
 
     if request.method == "POST":
         # Assuming a textarea with name 'template_content' in the form
         new_content = request.POST.get('template_content')
         template.content = new_content
         template.save()
-        # Redirect to view the updated template
-        return redirect('view_template')
+        return redirect('edit_template')
 
     return render(request, 'template_edit.html', {'template_content': template.content})
-
-# ... rest of your views ...
 
 
 def index(request):
@@ -95,10 +82,17 @@ def index(request):
                 },
             )
             return response
-        user = request.COOKIES.get('username')
-        if TeacherInfo.objects.filter(name__exact=user).exists():
+
+        full_name = ""
+        if User.objects.filter(username=request.user.username).exists():
+            full_name = request.user.get_full_name()
+        x = full_name.split(" ")
+        check = x[0].lower()
+
+        if TeacherInfo.objects.filter(unique_id=check).exists():
             value = 0
             unique = request.COOKIES.get('unique')
+            print(f"unique: {unique}")
 
             teacher_model = TeacherInfo.objects.get(unique_id=unique)
             generated_dataharu = StudentData.objects.filter(
@@ -124,6 +118,9 @@ def index(request):
                 is_generated=False, professor__unique_id=unique
             )
 
+            reapplied_dataharu = StudentData.objects.filter(
+                professor__unique_id=unique, reapplied=True)
+
             response = render(
                 request,
                 "Teacher.html",
@@ -134,6 +131,7 @@ def index(request):
                     "teacher_number": number,
                     "std_dataharu": std_dataharu,
                     "teacher_model": teacher_model,
+                    "reapplied": reapplied_dataharu
                 },
             )
             return response
@@ -1427,7 +1425,7 @@ def edit(request):
             value = True
         else:
             value = False
-        
+
         full_name = request.user.get_full_name()
         x = full_name.split(" ")
         unique = x[0].lower()
@@ -1516,6 +1514,9 @@ def teacher(request):
         is_generated=False, professor__unique_id=unique
     )
 
+    reapplied_dataharu = StudentData.objects.filter(
+        professor__unique_id=unique, reapplied=True)
+
     response = render(
         request,
         "Teacher.html",
@@ -1527,6 +1528,7 @@ def teacher(request):
             "teacher_number": number,
             "std_dataharu": std_dataharu,
             "teacher_model": teacher_model,
+            "reapplied": reapplied_dataharu
         },
     )
     return response
