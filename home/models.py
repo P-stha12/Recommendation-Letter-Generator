@@ -82,24 +82,93 @@ class TeacherInfo(models.Model):
 
 
 class Template(models.Model):
-    # Each teacher has one unique template
+    content = """
+        <p>
+          <br />I would like to {{quality.recommend}} recommend
+          Mr.<b>{{student.name}}</b> for admission to the graduate program at your
+          university. I have known {{firstname}} for about
+          {{student.years_taught}} now as an undergraduate student in
+          {{student.std.program}} Engineering. {%if student.is_pro == 'Yes'%}
+          Moreover, I was the supervisor for his final year project. {%endif%}
+          {% if value %} I taught him {{subject}}. {%else%} I taught him 
+          {%for item in subjects %} {{item}}, {%endfor%} and {{subject}}. {%endif%}
+        </p>
+
+        <!-- Section Two -->
+        <p>
+          <br />I recall {{firstname}} as a {{quality.quality}} student. 
+          {% if academics.tentative_ranking == "Batch Topper" %} In fact, he was the
+          topper of his batch in {{student.std.program}} Engineering. {% else %}
+          He maintained excellent academic performance throughout his
+          undergraduate ranking among the {{academics.tentative_ranking}}
+          students of his batch. {% endif %} As an instructor and his supervisor
+          too I had enough opportunity is observe his capabilities closely.
+        </p>
+
+        <!-- Section Three -->
+        <p>
+          <br />
+
+          {%if student.is_pro == 'Yes'%} I was the supervisor in his project
+          titled {{project.supervised_project}}. I was quite impressed by his
+          hardworking nature and learning capability. {%endif%} 
+          {%if project.final_project%} I supervised him in his project
+          {{project.final_project}}. I could observe his keen interest and
+          aptitude for research while working on the project. {%endif%} 
+          {%if student.is_paper == 'Yes'%} In fact, he was also able to publish a
+          paper on {{paper.paper_title}}. {%endif%}
+        </p>
+
+        <!-- Section Four -->
+        <p>
+          <br />I have noted his {{quality.presentation}} presentation skills
+          while he presented his work at our department as well as in the
+          conference. {%if quality.leadership or quality.teamwork%} I have seen
+          that he has good leadership capability and has a teamwork spirit.
+          {%endif%} {%if quality.hardworking%} He is a very hardworking student
+          who is always eager to learn. {%endif%} {%if quality.friendly%} He is
+          a well-spoken person with a friendly and gentle personality. {%endif%}
+          {%if quality.social%} He also has given his time to different social
+          causes. {%endif%} He is very helpful and cooperative student. He
+          eagerly handed over his project work to his juniors who wanted to
+          further continue the research on the topic along with proper guidance
+          and resources. I have also been impressed by his communication skills
+          during project presentations and lectures.
+        </p>
+
+        <!-- Section Five -->
+        <p>
+          <br />I appreciate his technical and professional skills. 
+          {%if quality.extracurricular != 'No'%} Besides academics, he was also
+          involved in several extra-curricular activities . He participated in
+          various competitions organized in and off the campus. {%endif%} 
+          {%if project.deployed%} Unlike, most students who limit their project to an
+          academic exercise, he actually deployed his project publicly in our
+          server and maintained it. {%endif%} {%if student.intern%} He has
+          worked in some IT companies which, I believe, has further added to his
+          technical skills and professional experience. {%endif%}
+        </p>
+
+        <!-- Section Six -->
+        <p>
+          <br />I am quite confident that {{firstname}}'s skills coupled with
+          academic capability will make him a good candidate for your
+          university. Thus, I would highly recommend him for the graduate
+          program at your esteemed university. Please feel free to contact me if
+          further enquiry is required.
+        </p>
+
+        <p>
+          <br />{{student.professor.name}}, <br />{{student.professor.title}},
+          <br />Department of {{student.professor.department}} Engineering
+          <br />Pulchowk Campus, Institute of Engineering, Tribhuvan University
+          <br />Phone: {{student.professor.phone}} <br />Mail:
+          {{student.professor.email}}
+        </p>
+        """
+
     teacher = models.OneToOneField(TeacherInfo, on_delete=models.CASCADE)
-    sectionOne = models.TextField(default="<br />I would like to {{ quality.recommend }} recommend"
-                                  " <b>{{ student.name }}</b> for admission to the graduate program at your"
-                                  " university. I have known {{ student.firstname }} for about"
-                                  " {{ student.years_taught }} now as an undergraduate student in"
-                                  " {{ student.std.program }} Engineering. {% if student.is_pro == 'Yes' %}"
-                                  " Moreover, I was the supervisor for his final year project. {% endif %}"
-                                  " {% if value %} I taught him {{ subject }}. {% else %} I taught him "
-                                  " {% for item in subjects %} {{ item }}, {% endfor %} and {{ subject }}. {% endif %}")
-    sectionTwo = models.TextField(default="<br />I recall {{firstname}} as a {{quality.quality}} student."
-                                  " {% if academics.tentative_ranking == 'Batch Topper' %} In fact, he was the"
-                                  " topper of his batch in {{student.std.program}} Engineering. {% else %}"
-                                  " He maintained excellent academic performance throughout his"
-                                  " undergraduate ranking among the {{academics.tentative_ranking}}"
-                                  " students of his batch. {% endif %} As an instructor and his supervisor"
-                                  " too I had enough opportunity is observe his capabilities closely.")
-    content = models.TextField(default="")
+    content = models.TextField(default=content)
 
     def __str__(self):
         return f"Template for {self.teacher.name}"

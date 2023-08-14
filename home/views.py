@@ -1446,11 +1446,11 @@ def edit(request):
             "template": template
         }
 
-        jinja_template = T(template.sectionOne)
-        sectionOne = jinja_template.render(Context(render_data))
+        jinja_template = T(template.content)
+        content = jinja_template.render(Context(render_data))
 
-        jinja_template = T(template.sectionTwo)
-        sectionTwo = jinja_template.render(Context(render_data))
+        if student.std.gender != "Male":
+            content = content.replace("him", "her").replace("his","her").replace("Mr", "Mrs")
 
         return render(request,
                       "test.html",
@@ -1467,8 +1467,7 @@ def edit(request):
                           "academics": academics,
                           "teacher": teacher_name,
                           "files": files,
-                          "sectionOne": sectionOne,
-                          "sectionTwo": sectionTwo
+                          "content": content,
                       }
                       )
 
