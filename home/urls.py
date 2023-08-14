@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path ,include
+from django.urls import path, include
 from home import views
 urlpatterns = [
     path('', views.index, name='home'),
@@ -25,13 +25,16 @@ urlpatterns = [
     # path('teacher', views.teacher, name='teacher'),
     path('userDetails', views.userDetails, name='userDetails'),
     path('studentDetails', views.studentDetails, name='studentDetails'),
-    path('studentDetailTeacher/<str:roll>/', views.studentDetailTeacher, name='studentDetailTeacher'),
+    path('studentDetailTeacher/<str:roll>/',
+         views.studentDetailTeacher, name='studentDetailTeacher'),
     path('profileUpdate', views.profileUpdate, name='profileUpdate'),
-    path('profileUpdateRequest', views.profileUpdateRequest, name='profileUpdateRequest'),
+    path('profileUpdateRequest', views.profileUpdateRequest,
+         name='profileUpdateRequest'),
     path('changeUsername', views.changeUsername, name='changeUsername'),
     path('changeStudentName', views.changeStudentName, name='changeStudentName'),
     path('userPasswordChange', views.userPasswordChange, name='userPasswordChange'),
-    path('studentPasswordChange', views.studentPasswordChange, name='studentPasswordChange'),
+    path('studentPasswordChange', views.studentPasswordChange,
+         name='studentPasswordChange'),
     path('forgotUsername', views.forgotUsername, name='forgotUsername'),
     path('checkEmail', views.checkEmail, name='checkEmail'),
     path('changeTitle', views.changeTitle, name='changeTitle'),
@@ -46,6 +49,5 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('view_template/', views.view_template, name='view_template'),
-    path('edit_template/', views.edit_template, name='edit_template'),
+    path('edit_template', views.edit_template, name='edit_template'),
 ]
