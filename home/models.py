@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
+import uuid
 
 # Assuming existing models like Department, Program, etc.
 
@@ -167,6 +168,7 @@ class Template(models.Model):
         </p>
         """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     teacher = models.OneToOneField(TeacherInfo, on_delete=models.CASCADE)
     content = models.TextField(default=content)
 
