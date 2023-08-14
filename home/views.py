@@ -736,8 +736,7 @@ def loginTeacher(request):
                 login(request, user)
                 full_name = request.user.get_full_name()
                 x = full_name.split(" ")
-                unique = "aman"
-                # name = x[0]
+                unique = x[0].lower()
 
                 teacher_model = TeacherInfo.objects.get(unique_id=unique)
                 generated_dataharu = StudentData.objects.filter(
@@ -1428,8 +1427,12 @@ def edit(request):
             value = True
         else:
             value = False
+        
+        full_name = request.user.get_full_name()
+        x = full_name.split(" ")
+        unique = x[0].lower()
 
-        template = Template.objects.get(teacher__unique_id="aman")
+        template = Template.objects.get(teacher__unique_id=unique)
         render_data = {
             "student": student,
             'subjects': subjects,
@@ -1450,7 +1453,8 @@ def edit(request):
         content = jinja_template.render(Context(render_data))
 
         if student.std.gender != "Male":
-            content = content.replace("him", "her").replace("his","her").replace("Mr", "Mrs")
+            content = content.replace("him", "her").replace(
+                "his", "her").replace("Mr", "Mrs")
 
         return render(request,
                       "test.html",
