@@ -14,7 +14,4 @@ admin.site.register(Qualities)
 admin.site.register(Academics)
 admin.site.register(Files)
 admin.site.register(Subject)
-
-
-
-
+admin.site.register(Template)
