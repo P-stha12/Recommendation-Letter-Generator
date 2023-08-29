@@ -996,6 +996,7 @@ def userDetails(request):
 
     teacherkonam = TeacherInfo.objects.get(unique_id=unique)
     email = teacherkonam.email
+    print(email)
     username = User.objects.get(email=email)
     subjects = teacherkonam.subjects.all()
     length = len(subjects)
